@@ -4,8 +4,8 @@ import dataManager from "./dataManager.js";
 const gamesProperty = "games";
 
 function displayGames(games){
-  for (let index = 0; index < 30; index++) {
-    let game = games[index];
+  for (let index = 0; index < games.length; index++) {
+    const game = games[index];
     const gameComponent = new GameComponent(game);
 
     const gamesContainer = document.getElementById("gamesContainer");
@@ -27,13 +27,14 @@ const handler = {
   }
 };
 
-export default class UiManager {
+export default class IndexController {
   constructor(games) {
     const properties = {
-      games: games
+      games: null
     };
     const propertiesProxy = new Proxy(properties, handler);
     this.properties = propertiesProxy;
+    this.properties.games = games;
     this.bindOnClickEvents();
   }
 
@@ -49,6 +50,7 @@ export default class UiManager {
     const searchButton = document.getElementById("searchButton");
     searchButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Fetching...'
     const fetchRequest = dataManager.fetchSearchData(searchBox.value);
+    
     fetchRequest
       .then(function(response) {
         return response.json();

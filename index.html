@@ -39,15 +39,13 @@
   </nav>
   <div class="container">
     <div id="gamesContainer" class="row">
-      <!-- load the game list dynamically -->
+      <!-- Games will be loaded here dynamically -->
     </div>
   </div>
   <script type="module">
     import data from "./scripts/fakeData.js";
-    import UiManager from "./scripts/uiManager.js";
+    import IndexViewManager from "./scripts/indexViewManager.js";
 
-    const uiManager = new UiManager({});
-
-    uiManager.properties.games = data.games;
+    const indexViewManager = new IndexViewManager(data.games);
   </script>
 </body>

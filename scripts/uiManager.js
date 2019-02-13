@@ -46,12 +46,15 @@ export default class UiManager {
   displaySearchItems() {
     const callingInstance = this;
     const searchBox = document.getElementById("searchBox");
+    const searchButton = document.getElementById("searchButton");
+    searchButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Fetching...'
     const fetchRequest = dataManager.fetchSearchData(searchBox.value);
     fetchRequest
       .then(function(response) {
         return response.json();
       })
       .then(function(data) {
+        searchButton.innerHTML = 'Search'
         clearGamesList();
         callingInstance.properties.games = data.games;
       });

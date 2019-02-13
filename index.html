@@ -11,17 +11,19 @@
     integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
     crossorigin="anonymous"
   />
-  <style>
-    .container {
-      max-width: 1110px;
-    }
-  </style>
 </head>
 <body>
-  <nav class="navbar navbar-light bg-light">
-    <h1>Board Games</h1>
+  <nav class="navbar navbar-dark bg-dark text-white sticky-top mb-3">
+    <h1>Cardboard Query</h1>
     <div class="row">
-      <div class="col-8">
+      <div class="col-12 m-auto form-inline">
+        <div class="form-group">
+          <label for="searchBy" class="form-label mr-1">Search By:</label>
+          <select name="searchBy" id="searchBy" class="form-control mr-2">
+            <option value="name">Name</option>
+            <option value="designer">Designer</option>
+          </select>
+        </div>
         <input
           class="form-control mr-sm-2"
           type="search"
@@ -29,23 +31,23 @@
           aria-label="Search"
           id="searchBox"
         />
-      </div>
-      <div class="col-2">
-        <button class="btn btn-outline-success my-2 my-sm-0" id="searchButton">
+        <button class="btn btn-info my-2 my-sm-0" id="searchButton">
+          <i class="fas fa-dice-five"></i>
           Search
         </button>
       </div>
     </div>
   </nav>
   <div class="container">
+    <div id="loading" class="m-auto col-4 mt-sm-5">
+
+    </div>
     <div id="gamesContainer" class="row">
       <!-- Games will be loaded here dynamically -->
     </div>
   </div>
   <script type="module">
-    import data from "./scripts/fakeData.js";
     import IndexViewManager from "./scripts/indexViewManager.js";
-
-    const indexViewManager = new IndexViewManager(data.games);
+    const indexViewManager = new IndexViewManager();
   </script>
 </body>

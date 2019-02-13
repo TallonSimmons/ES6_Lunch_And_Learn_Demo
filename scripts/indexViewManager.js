@@ -1,41 +1,63 @@
 import handler from "./proxyConfig.js";
 import dataManager from "./dataManager.js";
 
+function clearGamesList() {
+  document.getElementById("gamesContainer").innerHTML = "";
+}
+
 export default class IndexViewManager {
-  constructor(games) {
+  constructor() {
     const properties = {
       games: null,
       fetching: false
     };
     const propertiesProxy = new Proxy(properties, handler);
     this.properties = propertiesProxy;
-    this.properties.games = games;
     this.bindDomEvents();
+    this.getPopularGames();
   }
 
-  bindDomEvents(){
+  bindDomEvents() {
     this.bindOnClickEvents();
     this.bindOnKeyUpEvents();
   }
 
   bindOnClickEvents() {
     document.getElementById("searchButton").addEventListener("click", () => {
-      this.displaySearchItems();
+      this.getSearchData();
     });
   }
 
   bindOnKeyUpEvents() {
     document.getElementById("searchBox").addEventListener("keyup", e => {
       if (e.keyCode === 13) {
-        this.displaySearchItems();
+        this.getSearchData();
       }
     });
   }
 
-  displaySearchItems() {
+  getSearchData() {
+    clearGamesList();
     const thisInstance = this;
-    const searchBox = document.getElementById("searchBox");
-    const fetchRequest = dataManager.fetchSearchData(searchBox.value);
+    const searchTerm = document.getElementById("searchBox").value;
+    const searchBy = document.getElementById("searchBy").value;
+    const fetchRequest = dataManager.fetchSearchData(searchBy, searchTerm);
+    
+    thisInstance.properties.fetching = true;
+
+    fetchRequest
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        thisInstance.properties.games = data.games;
+        thisInstance.properties.fetching = false;
+      });
+  }
+
+  getPopularGames() {
+    const thisInstance = this;
+    const fetchRequest = dataManager.fetchPopularGames();    
     thisInstance.properties.fetching = true;
 
     fetchRequest

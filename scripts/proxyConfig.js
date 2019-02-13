@@ -1,7 +1,6 @@
 import GameComponent from "./gameComponent.js";
 
 function displayGames(games) {
-  clearGamesList();
   const gamesContainer = document.getElementById("gamesContainer");
 
   if (games.length > 0) {
@@ -12,8 +11,7 @@ function displayGames(games) {
       gamesContainer.insertAdjacentHTML("beforeend", gameComponent.html);
     }
   } else {
-    const noDataHtml = 
-    `<div class="col-12 text-center">
+    const noDataHtml = `<div class="col-12 text-center">
         <h2><em>No Games Found...</em></h2>
     </div>
     `;
@@ -21,17 +19,19 @@ function displayGames(games) {
   }
 }
 
-function clearGamesList() {
-  document.getElementById("gamesContainer").innerHTML = "";
-}
 
 function toggleFetchingAnimation(fetching) {
   const searchButton = document.getElementById("searchButton");
+  const loadingDiv = document.getElementById("loading");
+
   if (fetching) {
     searchButton.innerHTML =
-      '<i class="fas fa-spinner fa-spin"></i> Fetching...';
+      '<i class="fas fa-dice-five fa-spin mr-2"></i>Searching...';
+    loadingDiv.innerHTML =
+      '<h1 class="m-auto"><i class="fas fa-dice-five fa-spin mr-2"></i>Loading...</h1>';
   } else {
-    searchButton.innerHTML = "Search";
+    searchButton.innerHTML = '<i class="fas fa-dice-five mr-2"></i>Search';
+    loadingDiv.innerHTML = "";
   }
 }
 

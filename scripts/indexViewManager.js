@@ -1,9 +1,7 @@
 import GameComponent from "./gameComponent.js";
 import dataManager from "./dataManager.js";
 
-const gamesProperty = "games";
-
-function displayGames(games){
+function displayGames(games) {
   for (let index = 0; index < games.length; index++) {
     const game = games[index];
     const gameComponent = new GameComponent(game);
@@ -12,12 +10,13 @@ function displayGames(games){
 
     gamesContainer.insertAdjacentHTML("beforeend", gameComponent.html);
   }
-};
-
+}
 
 function clearGamesList() {
-    document.getElementById('gamesContainer').innerHTML ='';
+  document.getElementById("gamesContainer").innerHTML = "";
 }
+
+const gamesProperty = "games";
 const handler = {
   set(target, property, newValue) {
     if (property === gamesProperty) {
@@ -27,7 +26,7 @@ const handler = {
   }
 };
 
-export default class IndexController {
+export default class IndexViewManager {
   constructor(games) {
     const properties = {
       games: null
@@ -48,15 +47,16 @@ export default class IndexController {
     const callingInstance = this;
     const searchBox = document.getElementById("searchBox");
     const searchButton = document.getElementById("searchButton");
-    searchButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Fetching...'
+    searchButton.innerHTML =
+      '<i class="fas fa-spinner fa-spin"></i> Fetching...';
     const fetchRequest = dataManager.fetchSearchData(searchBox.value);
-    
+
     fetchRequest
       .then(function(response) {
         return response.json();
       })
       .then(function(data) {
-        searchButton.innerHTML = 'Search'
+        searchButton.innerHTML = "Search";
         clearGamesList();
         callingInstance.properties.games = data.games;
       });

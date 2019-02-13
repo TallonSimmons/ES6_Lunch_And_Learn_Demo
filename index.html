@@ -1,0 +1,47 @@
+<head>
+  <link
+    rel="stylesheet"
+    href="//stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous"
+  />
+</head>
+<style>
+  .container {
+    max-width: 1110px;
+  }
+</style>
+<body>
+  <nav class="navbar navbar-light bg-light">
+    <h1>Games</h1>
+    <div class="row">
+      <div class="col-8">
+        <input
+          class="form-control mr-sm-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+          id="searchBox"
+        />
+      </div>
+      <div class="col-2">
+        <button class="btn btn-outline-success my-2 my-sm-0" id="searchButton">
+          Search
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <div id="gamesContainer" class="row">
+      <!-- load the game list dynamically -->
+    </div>
+  </div>
+  <script type="module">
+    import data from "./scripts/fakeData.js";
+    import UiManager from "./scripts/uiManager.js";
+
+    const uiManager = new UiManager({});
+
+    uiManager.properties.games = data.games;
+  </script>
+</body>

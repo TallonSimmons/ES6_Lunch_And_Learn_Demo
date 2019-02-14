@@ -1,5 +1,6 @@
 import handler from "./proxyConfig.js";
-import dataManager from "./dataManager.js";
+import boardGameAtlasService from "./boardGameAtlasService.js";
+import fakeData from "./fakeData.js"
 
 function clearGamesList() {
   document.getElementById("gamesContainer").innerHTML = "";
@@ -14,7 +15,7 @@ export default class IndexViewManager {
     const propertiesProxy = new Proxy(properties, handler);
     this.properties = propertiesProxy;
     this.bindDomEvents();
-    this.getPopularGames();
+    this.properties.games = fakeData.games;
   }
 
   bindDomEvents() {
@@ -41,7 +42,7 @@ export default class IndexViewManager {
     const thisInstance = this;
     const searchTerm = document.getElementById("searchBox").value;
     const searchBy = document.getElementById("searchBy").value;
-    const fetchRequest = dataManager.fetchSearchData(searchBy, searchTerm);
+    const fetchRequest = boardGameAtlasService.fetchSearchData(searchBy, searchTerm);
     
     thisInstance.properties.fetching = true;
 
@@ -57,7 +58,7 @@ export default class IndexViewManager {
 
   getPopularGames() {
     const thisInstance = this;
-    const fetchRequest = dataManager.fetchPopularGames();    
+    const fetchRequest = boardGameAtlasService.fetchPopularGames();    
     thisInstance.properties.fetching = true;
 
     fetchRequest
